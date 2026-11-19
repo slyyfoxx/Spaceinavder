@@ -114,6 +114,8 @@
         "11111111111",
         "11111111111"
       ];
+      const motherShip = new Image();
+      motherShip.src = "mother-ship.png";
       const ufoSprite = [
         "000111111000",
         "011111111110",
@@ -362,7 +364,7 @@
       function updateUfo(dt) {
         ufoTimer -= dt * 1000;
         if (!ufo && ufoTimer <= 0) {
-          ufo = { x: -80, y: 78, w: 48, h: 18, speed: 90 };
+          ufo = { x: -60, y: 70, w: 52, h: 56, speed: 90 };
           ufoTimer = 12000 + Math.random() * 8000;
         }
         if (ufo) {
@@ -511,7 +513,14 @@
 
       function drawUfo() {
         if (!ufo) return;
-        drawPixelSprite(ufoSprite, ufo.x, ufo.y, 4, "#ff5fa2");
+        if (motherShip.complete && motherShip.naturalWidth > 0) {
+          ctx.save();
+          ctx.imageSmoothingEnabled = true;
+          ctx.drawImage(motherShip, ufo.x, ufo.y, ufo.w, ufo.h);
+          ctx.restore();
+        } else {
+          drawPixelSprite(ufoSprite, ufo.x, ufo.y, 4, "#ff5fa2");
+        }
       }
 
       function drawParticles() {
