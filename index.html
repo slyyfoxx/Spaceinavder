@@ -116,6 +116,8 @@
       ];
       const motherShip = new Image();
       motherShip.src = "mother-ship.png";
+      const lifeLostSound = new Audio("first_4_seconds.mp3");
+      lifeLostSound.preload = "auto";
       const ufoSprite = [
         "000111111000",
         "011111111110",
@@ -461,6 +463,10 @@
             playerFlash = 1800;
             explosion(player.x + player.w / 2, player.y + player.h / 2, "#55ff66", 14);
             playTone(90, 0.28, "sawtooth", 0.05);
+            lifeLostSound.currentTime = 0;
+            lifeLostSound.play().catch(error => {
+              console.error("Life-loss sound playback failed:", error);
+            });
             if (lives <= 0) state = "gameover";
           }
         }
